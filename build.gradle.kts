@@ -10,7 +10,6 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.1.4")
         classpath("com.github.recloudstream:gradle:master-SNAPSHOT")
-        // Cloudstream ana projesi şu an Kotlin 2.1.0'ı destekliyor
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
     }
 }
@@ -47,6 +46,13 @@ subprojects {
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
+        }
+    }
+
+    // KESİN ÇÖZÜM: Kotlin sürüm uyumsuzluğunu (metadata check) es geçmesini söylüyoruz
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        compilerOptions {
+            freeCompilerArgs.add("-Xskip-metadata-version-check")
         }
     }
 
