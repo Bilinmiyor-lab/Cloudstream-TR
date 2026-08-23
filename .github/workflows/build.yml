@@ -24,7 +24,8 @@ jobs:
 
       - name: Build Plugins
         run: |
-          chmod +x gradlew || true
+          gradle wrapper --gradle-version 8.5
+          chmod +x gradlew
           ./gradlew makePlugins --no-daemon
 
       - name: Commit & Push build outputs
