@@ -8,10 +8,10 @@ buildscript {
         maven("https://jitpack.io")
     }
     dependencies {
-        // En stabil versiyonlara sabitliyoruz
         classpath("com.android.tools.build:gradle:8.1.4")
         classpath("com.github.recloudstream:gradle:master-SNAPSHOT")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22")
+        // ÇÖZÜM: CloudStream'in güncel versiyonuyla eşleşmesi için Kotlin 2.0.0'a yükseltildi
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
     }
 }
 
@@ -41,8 +41,9 @@ subprojects {
     android {
         compileSdkVersion(34)
         defaultConfig {
-            minSdkVersion(21)
-            targetSdkVersion(34)
+            // Uyarıları gidermek için minSdk ve targetSdk olarak güncellendi
+            minSdk = 21
+            targetSdk = 34
         }
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_17
@@ -50,9 +51,9 @@ subprojects {
         }
     }
 
-    // KRİTİK ÇÖZÜM: Bulunamayan kütüphaneleri projeye zorla entegre ediyoruz.
     dependencies {
-        "compileOnly"("com.github.recloudstream:cloudstream:master-SNAPSHOT")
-        "compileOnly"("org.jsoup:jsoup:1.17.2")
+        val compileOnly by configurations
+        compileOnly("com.github.recloudstream:cloudstream:master-SNAPSHOT")
+        compileOnly("org.jsoup:jsoup:1.17.2")
     }
 }
