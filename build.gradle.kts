@@ -1,6 +1,5 @@
 import com.android.build.gradle.BaseExtension
 import com.lagradost.cloudstream3.gradle.CloudstreamExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
@@ -35,6 +34,7 @@ subprojects {
     apply(plugin = "com.lagradost.cloudstream3.gradle")
 
     cloudstream {
+        setRepo(System.getenv("GITHUB_REPOSITORY") ?: "https://github.com/user/repo")
     }
 
     android {
@@ -49,11 +49,17 @@ subprojects {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
         }
+    }
 
-        tasks.withType(KotlinCompile::class.java).configureEach {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
+    dependencies {
+        val implementation by configurations
+        
+        // CloudStream ana kütüphanesi (MainAPI, TvType vb. için zorunlu)
+        implementation("com.github.recloudstream.cloudstream:library:-SNAPSHOT")
+        
+        // HTML Parser ve HTTP Kütüphaneleri
+        implementation("org.jsoup:jsoup:1.18.1")
+        implementation("com.github.Blatzar:NiceHttp:0.4.11")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.0")
     }
 }
