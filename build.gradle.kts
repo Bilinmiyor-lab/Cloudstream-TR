@@ -10,7 +10,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.2.2")
         classpath("com.github.recloudstream:gradle:master-SNAPSHOT")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
     }
 }
 
@@ -54,10 +54,7 @@ subprojects {
     dependencies {
         val implementation by configurations
         
-        // CloudStream ana kütüphanesi (MainAPI, TvType vb. için zorunlu)
         implementation("com.github.recloudstream.cloudstream:library:-SNAPSHOT")
-        
-        // HTML Parser ve HTTP Kütüphaneleri
         implementation("org.jsoup:jsoup:1.18.1")
         implementation("com.github.Blatzar:NiceHttp:0.4.11")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.0")
