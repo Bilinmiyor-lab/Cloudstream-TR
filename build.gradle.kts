@@ -10,7 +10,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.2.2")
         classpath("com.github.recloudstream:gradle:master-SNAPSHOT")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
     }
 }
 
@@ -41,22 +41,19 @@ subprojects {
         compileSdkVersion(34)
 
         defaultConfig {
-            minSdkVersion(21)
-            targetSdkVersion(34)
+            minSdk = 21
+            targetSdk = 34
         }
 
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
         }
-    }
 
-    dependencies {
-        val implementation by configurations
-        
-        implementation("com.github.recloudstream.cloudstream:library:-SNAPSHOT")
-        implementation("org.jsoup:jsoup:1.18.1")
-        implementation("com.github.Blatzar:NiceHttp:0.4.11")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.0")
+        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+            compilerOptions {
+                freeCompilerArgs.add("-Xskip-metadata-version-check")
+            }
+        }
     }
 }
