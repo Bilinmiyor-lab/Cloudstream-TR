@@ -16,16 +16,18 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle' # Dependency caching
+          cache: 'gradle'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.5'
 
       - name: Build Plugins
         run: |
           gradle wrapper --gradle-version 8.5
           chmod +x gradlew
-          ./gradlew makePlugins --parallel --build-cache
+          ./gradlew makePlugins --no-daemon
 
       - name: Commit & Push build outputs
         run: |
