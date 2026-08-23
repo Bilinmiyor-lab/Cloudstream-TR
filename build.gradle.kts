@@ -1,17 +1,9 @@
-import com.android.build.gradle.BaseExtension
 import com.lagradost.cloudstream3.gradle.CloudstreamExtension
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://jitpack.io")
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:8.2.2")
-        classpath("com.github.recloudstream:gradle:master-SNAPSHOT")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
-    }
+plugins {
+    id("com.android.library") version "8.2.2" apply false
+    id("org.jetbrains.kotlin.android") version "2.1.0" apply false
+    id("com.lagradost.cloudstream3.gradle") version "master-SNAPSHOT" apply false
 }
 
 allprojects {
@@ -22,22 +14,16 @@ allprojects {
     }
 }
 
-fun Project.cloudstream(configuration: CloudstreamExtension.() -> Unit) =
-    extensions.configure("cloudstream", configuration)
-
-fun Project.android(configuration: BaseExtension.() -> Unit) =
-    extensions.configure("android", configuration)
-
 subprojects {
     apply(plugin = "com.android.library")
-    apply(plugin = "kotlin-android")
+    apply(plugin = "org.jetbrains.kotlin.android")
     apply(plugin = "com.lagradost.cloudstream3.gradle")
 
-    cloudstream {
+    extensions.configure<CloudstreamExtension>("cloudstream") {
         setRepo(System.getenv("GITHUB_REPOSITORY") ?: "https://github.com/user/repo")
     }
 
-    android {
+    extensions.configure<com.android.build.gradle.BaseExtension>("android") {
         compileSdkVersion(34)
 
         defaultConfig {
