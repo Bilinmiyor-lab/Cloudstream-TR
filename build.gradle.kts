@@ -49,7 +49,6 @@ subprojects {
         }
     }
 
-    // KESİN ÇÖZÜM: Kotlin sürüm uyumsuzluğunu (metadata check) es geçmesini söylüyoruz
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         compilerOptions {
             freeCompilerArgs.add("-Xskip-metadata-version-check")
@@ -59,6 +58,8 @@ subprojects {
     dependencies {
         val compileOnly by configurations
         compileOnly("com.github.recloudstream:cloudstream:master-SNAPSHOT")
+        // EKSİK OLAN PARÇA: Ağ istekleri için nicehttp kütüphanesi eklendi
+        compileOnly("com.github.recloudstream:nicehttp:master-SNAPSHOT")
         compileOnly("org.jsoup:jsoup:1.17.2")
     }
 }
